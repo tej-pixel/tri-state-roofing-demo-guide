@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tri-State Commercial Roofing — Sales Cloud Demo Guide</title>
+<style>
+  :root{
+    --navy:#22303d; --navy2:#2c4152; --slate:#5f6f7c; --ink:#1a2731;
+    --paper:#f5f7f9; --card:#ffffff; --line:#e0e6ec;
+    --steel:#2b6ca3; --steel-soft:#e8f1f8; --sky:#2f7fb0; --sky-soft:#eaf2fa;
+    --orange:#e0621f; --orange-soft:#fbebe0; --good:#1f8a5b; --amber:#c08a1e; --amber-soft:#fbf2df;
+    --radius:14px; --shadow:0 1px 2px rgba(34,48,61,.06),0 8px 28px rgba(34,48,61,.07);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--steel);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{line-height:1.22;letter-spacing:-.01em}
+  code{background:#eef2f5;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.86em;font-family:ui-monospace,Menlo,Consolas,monospace;color:#24506f}
+
+  .hero{background:linear-gradient(135deg,#22303d 0%,#2c4152 55%,#33566e 120%);color:#fff;padding:64px 0 56px;position:relative;overflow:hidden}
+  .hero:after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(224,98,31,.4),transparent 60%)}
+  .hero .wrap{position:relative;z-index:1}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#b8d4e8;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:6px 13px;border-radius:999px}
+  .hero h1{font-size:2.4rem;margin:20px 0 10px;font-weight:800}
+  .hero p.sub{font-size:1.14rem;color:#d3e0ea;max-width:720px;margin:0}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:9px 13px;font-size:.85rem;color:#eaf1f9} .chip b{color:#fff}
+
+  section{padding:46px 0}
+  section.alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .kicker{font-size:.76rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin:0 0 8px}
+  h2.title{font-size:1.72rem;margin:0 0 8px;color:var(--navy)}
+  .lead{font-size:1.05rem;color:var(--slate);max-width:780px;margin:0 0 8px}
+
+  .grid{display:grid;gap:18px}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:820px){.g2,.g3{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .card h3{margin:0 0 6px;font-size:1.05rem;color:var(--navy)} .card p{margin:0;color:var(--slate);font-size:.95rem}
+  .ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem;margin-bottom:12px;background:var(--steel-soft);color:var(--steel)}
+
+  .login{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  @media(max-width:820px){.login{grid-template-columns:1fr}}
+  .login .l,.login .r{padding:22px}
+  .login .l{background:var(--navy);color:#fff} .login .l h3{color:#fff;margin:0 0 14px;font-size:1.04rem}
+  .kv{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.16);font-size:.92rem}
+  .kv:last-child{border-bottom:none} .kv span{color:#b0c6d5} .kv b{font-family:ui-monospace,Menlo,monospace;font-weight:600;color:#fff;text-align:right;word-break:break-all}
+  .login .r h3{margin:0 0 10px;color:var(--navy);font-size:1.04rem} .login .r ol{margin:0;padding-left:18px;color:var(--slate);font-size:.94rem} .login .r ol li{margin-bottom:7px}
+
+  .agenda{counter-reset:step;display:grid;gap:12px}
+  .agenda a{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;color:var(--ink);transition:.15s;box-shadow:var(--shadow)}
+  .agenda a:hover{transform:translateX(3px);border-color:var(--steel);text-decoration:none}
+  .agenda a:before{counter-increment:step;content:counter(step);flex:0 0 34px;height:34px;border-radius:9px;background:var(--orange);color:#fff;font-weight:800;display:grid;place-items:center;font-size:.96rem}
+  .agenda .t{font-weight:700;color:var(--navy)} .agenda .d{color:var(--slate);font-size:.9rem;margin-left:auto;text-align:right}
+  @media(max-width:620px){.agenda .d{display:none}}
+
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+  .node{flex:1;min-width:150px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+  .node .o{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange)}
+  .node .n{font-weight:800;color:var(--navy);font-size:1.05rem;margin:4px 0 2px} .node .m{font-size:.85rem;color:var(--slate)}
+  .arrow{display:grid;place-items:center;padding:0 8px;color:var(--slate);font-size:1.4rem;font-weight:700}
+  @media(max-width:820px){.arrow{transform:rotate(90deg);padding:6px 0}}
+
+  .step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:26px}
+  .step-h{display:flex;align-items:center;gap:14px;padding:18px 22px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfd,#fff)}
+  .step-num{flex:0 0 40px;height:40px;border-radius:11px;background:var(--navy);color:#fff;font-weight:800;display:grid;place-items:center;font-size:1.05rem}
+  .step-h h3{margin:0;font-size:1.2rem;color:var(--navy)} .step-h .sh-sub{font-size:.86rem;color:var(--slate)}
+  .shot{display:block;width:100%;border-bottom:1px solid var(--line);background:#eef2f5}
+  .step-cols{display:grid;grid-template-columns:1fr 1fr;gap:0}@media(max-width:820px){.step-cols{grid-template-columns:1fr}}
+  .col{padding:20px 22px}.col+.col{border-left:1px solid var(--line)}@media(max-width:820px){.col+.col{border-left:none;border-top:1px solid var(--line)}}
+  .col h4{margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+  .clickpath{font-family:ui-monospace,Menlo,monospace;font-size:.84rem;color:#1f5178;background:var(--steel-soft);border:1px solid #cfe3f1;border-radius:8px;padding:10px 12px;line-height:1.7}
+  .say{border-left:3px solid var(--orange);background:var(--orange-soft);padding:12px 14px;border-radius:0 8px 8px 0;font-size:.96rem;color:#7a3c17;font-style:italic}
+  ul.points{margin:10px 0 0;padding-left:18px} ul.points li{margin-bottom:6px;color:var(--ink);font-size:.94rem} ul.points li b{color:var(--navy)}
+
+  .stages{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  @media(max-width:820px){.stages{grid-template-columns:1fr 1fr}}@media(max-width:520px){.stages{grid-template-columns:1fr}}
+  .stage{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:15px;box-shadow:var(--shadow)}
+  .stage .sn{font-size:.72rem;font-weight:700;color:#fff;background:var(--sky);border-radius:6px;padding:2px 8px;display:inline-block}
+  .stage:nth-child(1) .sn{background:#5b7d97}.stage:nth-child(2) .sn{background:#3f7196}.stage:nth-child(3) .sn{background:var(--steel)}.stage:nth-child(4) .sn{background:#215a86}.stage:nth-child(5) .sn{background:var(--good)}
+  .stage h4{margin:9px 0 5px;font-size:.98rem;color:var(--navy)} .stage p{margin:0;font-size:.85rem;color:var(--slate)}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;font-size:.92rem}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line)}
+  th{background:#eef2f5;color:var(--navy);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase} tr:last-child td{border-bottom:none} td b{color:var(--navy)}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}@media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center;box-shadow:var(--shadow)}
+  .stat .v{font-size:1.6rem;font-weight:800;color:var(--steel)} .stat .k{font-size:.82rem;color:var(--slate);margin-top:2px}
+
+  .obj{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+  .obj .q{font-weight:700;color:var(--navy);margin:0 0 6px} .obj .q:before{content:"“";color:var(--orange);font-size:1.3rem;font-weight:800;margin-right:2px}
+  .obj .a{color:var(--slate);font-size:.94rem;margin:0} .obj .a b{color:var(--ink)}
+  .note{background:var(--amber-soft);border:1px solid #ecd9a8;border-radius:10px;padding:13px 16px;font-size:.9rem;color:#6b4e12}
+
+  footer{background:var(--navy);color:#b0c6d5;padding:36px 0;font-size:.9rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;align-items:center} footer b{color:#fff} .toplink{color:#b0c6d5}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">● SaaScend × Tri-State Roofing · Sales Cloud POC</span>
+    <h1>Tri-State Commercial Roofing — Sales Cloud Demo Guide</h1>
+    <p class="sub">Relationship-driven roofing sales, out of Dropbox and Company Cam and into a real CRM — bidding-platform lead capture, on-site roof evaluations, proposal tracking, and follow-up automation that builds the repeat business Conor is after.</p>
+    <div class="meta">
+      <span class="chip"><b>Audience:</b> Conor Jones (VP Estimation) &amp; the Tri-State team</span>
+      <span class="chip"><b>Presented by:</b> Emily Ambargis</span>
+      <span class="chip"><b>Cloud:</b> Sales Cloud</span>
+      <span class="chip"><b>Org:</b> force-inspiration-37892 (trial)</span>
+    </div>
+  </div>
+</header>
+
+<!-- CONTEXT -->
+<section>
+  <div class="wrap">
+    <p class="kicker">The 30-second context</p>
+    <h2 class="title">Why we built this</h2>
+    <p class="lead">Tri-State wins work through relationships — leads from BuildingConnected &amp; BlueBook, networking at conferences, and referrals — but it all lives in <strong>Dropbox folders and Company Cam photos</strong> with no CRM behind it. This POC is that relationship-driven motion rebuilt in Sales Cloud: capture the lead, log the roof evaluation on-site, send and track the proposal, and never let a relationship go cold.</p>
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card"><div class="ico">🏢</div><h3>Lead capture &amp; qualification</h3><p>Prospects from bidding platforms and networking land as Leads — tagged by prospect type, platform, and evaluation status, ready for a roof walk.</p></div>
+      <div class="card"><div class="ico">🪜</div><h3>On-site roof evaluation</h3><p>Log roof condition, scope, photo references, and estimated project value right on the deal — a Sales Path guides Conor stage by stage.</p></div>
+      <div class="card"><div class="ico">🔁</div><h3>Proposal &amp; relationship nurture</h3><p>Flows auto-create follow-up tasks when a proposal is sent and flag stale deals — so relationships turn into repeat business.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE HEARD -->
+<section class="alt">
+  <div class="wrap">
+    <p class="kicker">Open here · Validate first</p>
+    <h2 class="title">What we heard</h2>
+    <p class="lead">Open by playing back Conor's world — it earns trust and frames the demo as the fix.</p>
+    <div class="grid g2" style="margin-top:22px">
+      <div class="card">
+        <h3>✅ The pains you named</h3>
+        <ul class="points" style="margin-top:6px">
+          <li><b>No CRM</b> — sales lives in <b>Dropbox + Company Cam</b>; nothing ties the prospect, the roof, and the proposal together.</li>
+          <li><b>Leads scattered</b> across BuildingConnected, BlueBook, and networking events.</li>
+          <li><b>Relationships go cold</b> — no system to recall a property manager for the next project.</li>
+          <li><b>Margin shift</b> — moving from low-margin new construction toward recurring relationship work.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧩 What that tells us</h3>
+        <ul class="points" style="margin-top:6px">
+          <li>You're a <b>relationship-driven contractor</b> — the CRM has to capture the roof-walk, not just a name.</li>
+          <li>Conor wears every hat — <b>lead gen, estimation, proposals</b> — so it has to be fast.</li>
+          <li>Repeat business is the goal — <b>nurture after close</b> matters as much as the win.</li>
+        </ul>
+        <p style="margin:12px 0 0;font-size:.9rem;color:var(--slate)">→ Tie every screen back to one of these as you go.</p>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card" style="border-left:4px solid var(--steel)"><h3>🏗️ Industry best practice, native first</h3><p>This is the proven pattern we deliver for contractors &amp; field-services — <b>native Sales Cloud first</b>, tailored to Tri-State's roof-eval process. Not a heavy custom build.</p></div>
+      <div class="card" style="border-left:4px solid var(--sky)"><h3>📖 Frame it as chapter one</h3><p>Today is the <b>foundation</b> — lead capture, evaluations, proposal tracking. Later chapters add the <b>Company Cam photo link</b> and deeper nurture automation.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRE-FLIGHT -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Pre-flight</p>
+    <h2 class="title">Log in before you present</h2>
+    <p class="lead">Open the trial org in a clean browser window a few minutes early. Everything is seeded — nothing needs to be created live. (Note: this trial org expires <b>July 21, 2026</b>.)</p>
+    <div class="login" style="margin-top:18px">
+      <div class="l">
+        <h3>🔑 Trial login</h3>
+        <div class="kv"><span>Login URL</span><b>force-inspiration-37892<br>.scratch.lightning.force.com</b></div>
+        <div class="kv"><span>Username</span><b>1784042930350_test-qyhodvzvap3k@example.com</b></div>
+        <div class="kv"><span>Password</span><b>TriState2026!</b></div>
+        <div class="kv"><span>App</span><b>Sales</b></div>
+      </div>
+      <div class="r">
+        <h3>Quick start</h3>
+        <ol>
+          <li>Log in and confirm the <b>Sales</b> app is selected (top-left).</li>
+          <li>Open <b>Dashboards</b> → <b>Tri-State Leadership Dashboard</b> and hit <b>Refresh</b> so tiles show live data.</li>
+          <li>Keep the <b>Opportunities</b> and <b>Leads</b> tabs handy — that's most of the demo.</li>
+          <li>Consider opening on the <b>dashboard</b> (the pipeline view), then drilling into one deal and one lead.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section class="alt">
+  <div class="wrap">
+    <p class="kicker">The walkthrough</p>
+    <h2 class="title">Demo agenda</h2>
+    <p class="lead">Four stops, ~12 minutes: a deal on the path, the roof-evaluation detail, lead capture, and the leadership roll-up.</p>
+    <div class="agenda" style="margin-top:20px">
+      <a href="#s1"><span class="t">A deal on the guided Sales Path</span><span class="d">Stage progression</span></a>
+      <a href="#s2"><span class="t">Inside the deal — the roof evaluation</span><span class="d">Condition, scope, value</span></a>
+      <a href="#s3"><span class="t">Lead capture from bidding platforms</span><span class="d">Prospect type &amp; platform</span></a>
+      <a href="#s4"><span class="t">The leadership dashboard</span><span class="d">Pipeline, forecast, conversion</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ORIENTATION -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Orientation</p>
+    <h2 class="title">How the model maps to Sales Cloud</h2>
+    <p class="lead">Ground the team in the objects first — this is the mental model everything hangs on.</p>
+    <div class="flow" style="margin-top:22px">
+      <div class="node"><div class="o">Lead</div><div class="n">Prospect</div><div class="m">A bidding-platform or networking prospect — building owner or property manager.</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="o">Account</div><div class="n">Building / owner</div><div class="m">The property or group you're building a relationship with.</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="o">Opportunity</div><div class="n">Roof project</div><div class="m">A roofing deal with the evaluation &amp; proposal on it.</div></div>
+      <div class="arrow">→</div>
+      <div class="node"><div class="o">Owner</div><div class="n">Conor</div><div class="m">The estimator/seller — powers pipeline &amp; activity.</div></div>
+    </div>
+    <p class="note" style="margin-top:20px">💡 <b>Talking point:</b> "Today the prospect is on a bidding platform, the roof photos are in Company Cam, and the proposal is in Dropbox. Here it's one connected record — and a later chapter links the Company Cam photos right onto the deal."</p>
+  </div>
+</section>
+
+<!-- STEP 1 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="step" id="s1">
+      <div class="step-h"><div class="step-num">1</div><div><h3>A deal on the guided Sales Path</h3><div class="sh-sub">Opportunities → open a deal → follow the path</div></div></div>
+      <img class="shot" src="screenshots/opp-salespath.png" alt="Opportunity on the Sales Path at Proposal Sent">
+      <div class="step-cols">
+        <div class="col">
+          <h4>Click path</h4>
+          <div class="clickpath">Opportunities → <b>Ironclad DC-2 – TPO Replacement</b><br>→ follow the <b>Sales Path</b> across the top</div>
+          <h4 style="margin-top:16px">Say this</h4>
+          <p class="say">"Every roofing deal is a record that moves through the same stages — Prospecting, Evaluation, Proposal Sent, Negotiation, Closed. Conor always knows the next step, and leadership can see which proposals are out and which deals are stalling."</p>
+        </div>
+        <div class="col">
+          <h4>Point out</h4>
+          <ul class="points">
+            <li><b>The Sales Path</b> — click "Mark Stage as Complete" to advance; guidance shows per stage.</li>
+            <li><b>Quick actions</b> (top-right): <b>Log Roof Evaluation</b> and <b>Send Proposal</b> — one click, on-site.</li>
+            <li><b>Owner = Conor Jones</b> — the estimator/seller; drives pipeline &amp; activity.</li>
+            <li><b>Activity timeline</b> — auto-created follow-up tasks (a flow) live right on the deal.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 2 -->
+<section>
+  <div class="wrap">
+    <div class="step" id="s2">
+      <div class="step-h"><div class="step-num">2</div><div><h3>Inside the deal — the roof evaluation</h3><div class="sh-sub">Same Opportunity → Details tab</div></div></div>
+      <img class="shot" src="screenshots/opp-details.png" alt="Opportunity details with roof evaluation and proposal fields">
+      <div class="step-cols">
+        <div class="col">
+          <h4>Click path</h4>
+          <div class="clickpath">On the Opportunity → <b>Details</b> tab → <b>Evaluation</b> &amp; <b>Proposal</b> sections</div>
+          <h4 style="margin-top:16px">Say this</h4>
+          <p class="say">"This is where the roof walk becomes data. Roof condition, scope notes, evaluation date, the proposed solution, estimated project value, and how many days the proposal's been out — all on the deal. This is what's in your head and your Dropbox folder today, now in one place."</p>
+        </div>
+        <div class="col">
+          <h4>Point out</h4>
+          <ul class="points">
+            <li><b>Roof Condition</b> (Poor/Fair/Good/Excellent) &amp; <b>Scope Notes</b> — the evaluation, captured on-site.</li>
+            <li><b>Evaluation Date &amp; Photo Reference</b> — links to the Company Cam documentation.</li>
+            <li><b>Est. Project Value</b> — drives the pipeline and forecast ($420K here).</li>
+            <li><b>Days Since Proposal</b> — an auto-calculated flag so no proposal goes cold.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section class="alt">
+  <div class="wrap">
+    <div class="step" id="s3">
+      <div class="step-h"><div class="step-num">3</div><div><h3>Lead capture from bidding platforms</h3><div class="sh-sub">Leads → open a Lead → Details</div></div></div>
+      <img class="shot" src="screenshots/lead.png" alt="Lead record with bidding platform and prospect type fields">
+      <div class="step-cols">
+        <div class="col">
+          <h4>Click path</h4>
+          <div class="clickpath">Leads → <b>Grace Ellis (Oakmont Shopping Center)</b><br>→ <b>Details</b> → the <b>Tri-State Roofing Details</b> section</div>
+          <h4 style="margin-top:16px">Say this</h4>
+          <p class="say">"Every prospect from BuildingConnected, BlueBook, or a conference lands here — tagged with whether they're a building owner or property manager, which platform they came from, and where they are in evaluation. When one's ready, Conor converts it to a deal in a click and schedules the roof walk."</p>
+        </div>
+        <div class="col">
+          <h4>Point out</h4>
+          <ul class="points">
+            <li><b>Prospect Type</b> — Building Owner / Property Manager / Facilities Manager.</li>
+            <li><b>Bidding Platform &amp; Lead Source Detail</b> — where the prospect came from.</li>
+            <li><b>Evaluation Status</b> — Pending → Ready to Evaluate → Evaluated, so no roof walk is missed.</li>
+            <li><b>Convert</b> — promotes a qualified prospect into the pipeline in one click.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section>
+  <div class="wrap">
+    <div class="step" id="s4">
+      <div class="step-h"><div class="step-num">4</div><div><h3>The leadership dashboard</h3><div class="sh-sub">Dashboards → Tri-State Leadership Dashboard</div></div></div>
+      <img class="shot" src="screenshots/dashboard.png" alt="Tri-State Leadership Dashboard">
+      <div class="step-cols">
+        <div class="col">
+          <h4>Click path</h4>
+          <div class="clickpath">Dashboards → <b>Tri-State Leadership Dashboard</b> → <b>Refresh</b></div>
+          <h4 style="margin-top:16px">Say this</h4>
+          <p class="say">"This is the whole pipeline on one screen — total value by close month, new leads, win rate, conversion, average days a proposal sits, and the 12-month closed-won trend. This is what tells you where the business is headed, refreshed on demand."</p>
+        </div>
+        <div class="col">
+          <h4>Point out</h4>
+          <ul class="points">
+            <li><b>Pipeline Value &amp; Forecast by Month</b> — ~$3.1M in open roofing deals by close date.</li>
+            <li><b>New Leads This Month &amp; Conversion Rate</b> — the top of the funnel, live.</li>
+            <li><b>Average Days in Proposal (6.8)</b> — how fast deals move once a proposal's out.</li>
+            <li><b>Win Rate &amp; Closed Won Trend</b> — the results, quarter over quarter.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SALES PATH -->
+<section class="alt">
+  <div class="wrap">
+    <p class="kicker">Reference</p>
+    <h2 class="title">The Tri-State Sales Path</h2>
+    <p class="lead">The five stages every roofing deal moves through. Use this to answer "what does each stage mean?"</p>
+    <div class="stages" style="margin-top:20px">
+      <div class="stage"><span class="sn">Stage 1</span><h4>Prospecting</h4><p>Initial contact from a bid, referral, or networking; interest established.</p></div>
+      <div class="stage"><span class="sn">Stage 2</span><h4>Evaluation</h4><p>On-site roof walk — condition, scope, photos, and estimated value captured.</p></div>
+      <div class="stage"><span class="sn">Stage 3</span><h4>Proposal Sent</h4><p>Estimate &amp; proposal delivered; follow-up clock starts.</p></div>
+      <div class="stage"><span class="sn">Stage 4</span><h4>Negotiation</h4><p>Scope, price, and schedule finalized with the owner.</p></div>
+      <div class="stage"><span class="sn">Stage 5</span><h4>Closed Won</h4><p>Job won and handed off to operations — with a nurture task for repeat business.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S LIVE -->
+<section>
+  <div class="wrap">
+    <p class="kicker">What's configured</p>
+    <h2 class="title">What's live in this trial</h2>
+    <p class="lead">A focused Sales Cloud foundation — the process, the roofing-specific fields, and the reporting layer.</p>
+    <table style="margin-top:18px">
+      <tr><th>Area</th><th>What's built</th></tr>
+      <tr><td><b>Record type</b></td><td>Tri-State Roofing — the Opportunity type for roofing deals.</td></tr>
+      <tr><td><b>Sales Path</b></td><td>5-stage guided path (Prospecting → Evaluation → Proposal Sent → Negotiation → Closed Won).</td></tr>
+      <tr><td><b>Roof-eval fields</b></td><td>Roof Condition, Scope Notes, Evaluation Date, Photo Reference, Proposed Solution, Est. Project Value, Proposal Sent Date, Days Since Proposal.</td></tr>
+      <tr><td><b>Lead fields</b></td><td>Prospect Type, Bidding Platform, Lead Source Detail, Evaluation Status.</td></tr>
+      <tr><td><b>Quick actions &amp; flows</b></td><td>Log Roof Evaluation, Send Proposal; flows auto-create follow-up &amp; stale-deal tasks.</td></tr>
+      <tr><td><b>Reports &amp; dashboard</b></td><td>8 reports + the Tri-State Leadership Dashboard (pipeline, forecast, conversion, win rate, proposal aging).</td></tr>
+      <tr><td><b>Demo data</b></td><td>Conor + a second estimator · 9 building/owner accounts · 17 deals across all stages (~$3.1M open) · 11 bidding-platform leads · roof evaluations &amp; logged activity.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- QUICK REFERENCE -->
+<section class="alt">
+  <div class="wrap">
+    <p class="kicker">Quick reference</p>
+    <h2 class="title">The numbers in the org</h2>
+    <div class="stats" style="margin-top:18px">
+      <div class="stat"><div class="v">~$3.1M</div><div class="k">Open pipeline value</div></div>
+      <div class="stat"><div class="v">17</div><div class="k">Deals across the path</div></div>
+      <div class="stat"><div class="v">11</div><div class="k">Bidding-platform leads</div></div>
+      <div class="stat"><div class="v">6.8</div><div class="k">Avg days in proposal</div></div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card"><h3>Pipeline by stage</h3><p>Prospecting 3 ($530K) · Evaluation 3 ($825K) · Proposal Sent 5 ($1.41M) · Negotiation 1 ($310K) · plus closed-won this quarter.</p></div>
+      <div class="card"><h3>Lead sources</h3><p>BuildingConnected &amp; BlueBook bids, conference networking, and referrals — captured and qualified by evaluation status.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIONS -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Appendix</p>
+    <h2 class="title">Objection handling</h2>
+    <p class="lead">Likely pushback from the Tri-State team, and how to answer it.</p>
+    <div class="grid g2" style="margin-top:20px">
+      <div class="obj"><p class="q">Dropbox and Company Cam work fine for us."</p><p class="a">"They're great for files and photos — but nothing connects the prospect, the roof, and the proposal, and nothing reminds you to re-engage. This ties it all together, and a later chapter <b>links Company Cam right onto the deal</b>."</p></div>
+      <div class="obj"><p class="q">I'm the only one really selling — is this overkill?"</p><p class="a">"That's exactly why it's built around <b>you</b>, Conor. The Sales Path and quick actions ('Log Roof Evaluation', 'Send Proposal') are one click each — it saves you time and gets the business out of your head."</p></div>
+      <div class="obj"><p class="q">How does this help with repeat business?"</p><p class="a">"Every relationship stays alive — when a deal closes, a <b>nurture task</b> is created to check back, and stale proposals get flagged automatically. That recall is exactly how you win the next project."</p></div>
+      <div class="obj"><p class="q">My leads come from bidding platforms, not a website."</p><p class="a">"That's handled — leads carry the <b>bidding platform and prospect type</b>, so BuildingConnected and BlueBook prospects are captured and qualified the same way, ready for a roof walk."</p></div>
+      <div class="obj"><p class="q">Can I see which proposals are going cold?"</p><p class="a">"Yes — <b>Days Since Proposal</b> is on every deal, and a daily flow flags stale proposals so you re-engage before the owner moves on."</p></div>
+      <div class="obj"><p class="q">How long until we're live?"</p><p class="a">"This foundation stood up fast on best practices. A production build — your real process, the Company Cam link, and any extra fields — is a <b>few weeks, not months</b>."</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><b>Tri-State Commercial Roofing — Sales Cloud Demo Guide</b><br>Prepared by SaaScend · Trial org force-inspiration-37892 (expires Jul 21, 2026)</div>
+    <a class="toplink" href="#top">↑ Back to top</a>
+  </div>
+</footer>
+
+</body>
+</html>
